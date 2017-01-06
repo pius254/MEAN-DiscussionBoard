@@ -4,13 +4,22 @@
     <acme-navbar creation-date="main.creationDate"></acme-navbar>
   </div>
 
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">POST A COMMENT</div>
       <div class="panel-body">
         <div class="input-group">
           <textarea name="post" id="comment" rows="3" class="form-control custom-control" style="resize: none" ng-model="main.message"></textarea>
-          <span class="input-group-addon btn btn-primary" ng-click="main.postMessage()">POST</span>
+          <span class="input-group-addon btn btn-primary" ng-click="main.postComment()">POST</span>
         </div>
+      </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">COMMENTS</div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="comment in main.messages">{{ comment.msg }}</li>
+        </ul>
       </div>
   </div>
 

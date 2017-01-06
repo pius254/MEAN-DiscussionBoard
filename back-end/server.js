@@ -15,6 +15,8 @@ app.use(function(req,res,next) {
 	next();
 })
 
+app.get('/api/message', GetComments);
+
 app.post('/api/message', function(req, res){
 	console.log(req.body);
 	var comment = new Comment(req.body);
@@ -22,16 +24,15 @@ app.post('/api/message', function(req, res){
 	res.status(200);
 })
 
-function GetComments() {
+function GetComments(req, res) {
 	Comment.find({}).exec(function (err, result) {
-		console.log(result);
+		res.send(result);
 	});
 }
 
 mongoose.connect("mongodb://localhost:27017/test", function (err, db) {
 	if (!err) {
 		console.log("we are connected to mongo");
-		GetComments();
 	}
 })
 
