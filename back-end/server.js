@@ -2,10 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
-var Comment = mongoose.model('comment', {
-	msg: String
-});
+var auth = require('./controllers/auth');
+var comment = require('./controllers/comment');
 
 app.use(bodyParser.json());
 
@@ -15,24 +13,11 @@ app.use(function(req,res,next) {
 	next();
 })
 
-app.get('/api/message', GetComments);
+app.get('/api/message', comment.get);
 
-app.post('/api/message', function(req, res){
-	console.log(req.body);
-	var comment = new Comment(req.body);
-	comment.save();
-	res.status(200);
-})
+app.post('/api/message', comment.post);
 
-app.post('/auth/register', function (req, res) {
-	console.log(req.body);
-})
-
-function GetComments(req, res) {
-	Comment.find({}).exec(function (err, result) {
-		res.send(result);
-	});
-}
+app.post('/auth/register', auth.register);
 
 mongoose.connect("mongodb://localhost:27017/test", function (err, db) {
 	if (!err) {
