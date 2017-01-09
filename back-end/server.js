@@ -24,6 +24,10 @@ app.post('/api/message', function(req, res){
 	res.status(200);
 })
 
+app.post('/auth/register', function (req, res) {
+	console.log(req.body);
+})
+
 function GetComments(req, res) {
 	Comment.find({}).exec(function (err, result) {
 		res.send(result);
@@ -33,6 +37,9 @@ function GetComments(req, res) {
 mongoose.connect("mongodb://localhost:27017/test", function (err, db) {
 	if (!err) {
 		console.log("we are connected to mongo");
+	}else{
+		console.log("Error Connecting to Mongo");
+		throw err;
 	}
 })
 
